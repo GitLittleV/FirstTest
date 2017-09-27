@@ -21,8 +21,8 @@ public class TakeMusic extends Activity implements View.OnClickListener{
     private Button play;
     private Button pause;
     private Button stop;
-    private MediaPlayer mediaPlayer = new MediaPlayer();
-    public static final String TAG="TakeMusic";
+    private MediaPlayer mediaPlayer=new MediaPlayer();
+    public static final String TAG="logTakeMusic";
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -36,23 +36,21 @@ public class TakeMusic extends Activity implements View.OnClickListener{
         stop.setOnClickListener(this);
         initMediaPlayer();//编写初始化函数
     }
+    private String path;
     private void initMediaPlayer(){
-
-        File file = new File(Environment.getExternalStorageDirectory(),"music.mp3");
-        Log.d(TAG, "File paths : "+file.getAbsolutePath());
-        Log.d(TAG, "File exist? : "+file.exists());
+        path = Environment.getExternalStorageDirectory()+"/Music/mymusic.mp3";
+        Log.d(TAG, "initMediaPlayer: path "+path);
         try {
-            Log.d(TAG, "File getpath : "+file.getPath());
-            mediaPlayer.setDataSource(file.getPath());//指定音频文件路径
-
+            mediaPlayer.reset();
+            mediaPlayer.setDataSource(path);//指定音频文件路径
             mediaPlayer.prepare();//让mediaplay进入准备
 
-        } catch (IOException e) {
-            e.printStackTrace();
+        } catch (IllegalStateException e) {
+            Log.d(TAG, "IllegalStateException "+e.getMessage());
+        } catch (IOException a){
+            Log.d(TAG, "IOException :"+a.getMessage());
         }
-
-
-
+        //mediaPlayer=MediaPlayer.create(this,R.raw.music);
     }
 
     @Override

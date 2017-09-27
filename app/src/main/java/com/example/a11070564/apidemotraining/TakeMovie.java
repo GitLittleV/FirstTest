@@ -27,7 +27,7 @@ public class TakeMovie extends Activity{
     private Button replay;
 
     private VideoView videoView ;
-    public static final String TAG="TakeMovie";
+    public static final String TAG="myTakeMovie";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,10 +44,18 @@ public class TakeMovie extends Activity{
         initvideoPlayer();//编写初始化函数
     }
 
+    private String path;
     private void initvideoPlayer(){
-        videoView.setVideoURI(Uri.parse("android.resource://"+R.raw.movie));
-        videoView.setMediaController(new MediaController(this));
-        videoView.requestFocus();
+
+        try {
+            path = Environment.getExternalStorageDirectory()+"/Movies/mymovie.mp4";
+            //videoView.setVideoURI(Uri.parse("android.resource://"+R.raw.movie));
+            videoView.setVideoPath(path);
+            videoView.setMediaController(new MediaController(this));
+            videoView.requestFocus();
+        } catch (Exception e) {
+            Log.d(TAG, "init"+e.getMessage());
+        }
     }
 
     private View.OnClickListener clickListener_play = new View.OnClickListener() {
