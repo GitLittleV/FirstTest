@@ -49,8 +49,11 @@ public class TakeMovie extends Activity{
 
         try {
             path = Environment.getExternalStorageDirectory()+"/Movies/mymovie.mp4";
-            //videoView.setVideoURI(Uri.parse("android.resource://"+R.raw.movie));
-            videoView.setVideoPath(path);
+            //videoView.setVideoURI(Uri.parse(Environment.getExternalStorageDirectory()+"/Movies/mymovie.mp4"));
+
+            videoView.setVideoURI(Uri.parse("android.res://" + R.raw.movie));
+            //videoView.setVideoPath(path);
+            //videoView.setVideoPath();
             videoView.setMediaController(new MediaController(this));
             videoView.requestFocus();
         } catch (Exception e) {
@@ -65,7 +68,7 @@ public class TakeMovie extends Activity{
                 Log.d(TAG, "play : ");
                 videoView.start();
                 Toast.makeText(TakeMovie.this,"start",Toast.LENGTH_SHORT).show();
-
+                videoView.requestFocus();
             }
 
         }

@@ -11,8 +11,12 @@
 
     <!--write to SD-->
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+
+
+
     <!--<uses-permission android:name="android.permission.MEDIA_CONTENT_CONTROL"/>-->
+    <uses-feature android:name="android.hardware.camera2"
+        android:required="true"/>
 
     <application
         android:allowBackup="true"
@@ -22,7 +26,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
 
-        <activity android:name=".TakeMovie">
+        <activity android:name=".TakePhoto">
 
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -30,15 +34,16 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <!--<provider-->
-            <!--android:authorities="com.example.a11070564.apidemotraining.fileprovider"-->
-            <!--android:name="android.support.v4.content.FileProvider"-->
-            <!--android:grantUriPermissions="true"-->
-            <!--android:exported="false">-->
-        <!--<meta-data-->
-            <!--android:name="android.support.FILE_PROVIDER_PATHS"-->
-            <!--android:resource="@xml/filepaths" />-->
-        <!--</provider>-->
+        <provider
+            android:authorities="com.example.a11070564.apidemotraining.fileprovider"
+            android:name="android.support.v4.content.FileProvider"
+            android:grantUriPermissions="true"
+            android:exported="false">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/filepaths">
+                </meta-data>
+        </provider>
     </application>
 
 
