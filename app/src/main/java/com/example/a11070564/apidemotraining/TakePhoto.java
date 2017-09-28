@@ -144,20 +144,28 @@ public class TakePhoto extends Activity {
                     }else {
 
 
-                        try {
-                            Intent intent = new Intent("com.android.camera.action.CROP");
-                            intent.setDataAndType(imageUri, "image/*");
-                            intent.putExtra("scale", "true");
-//                            intent.putExtra("outputX", 80);
-//                            intent.putExtra("outputY", 80);
+//                        try {
+//                            Intent intent = new Intent("com.android.camera.action.CROP");
+//                            intent.setDataAndType(imageUri, "image/*");
+//                            intent.putExtra("scale", "true");
+//                          intent.putExtra("outputX", 80);
+//                          intent.putExtra("outputY", 80);
 //                            intent.putExtra("return-data", false);
-                            intent.putExtra(MediaStore.EXTRA_OUTPUT,imageUri);
-                            intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
-                            //再次启动跳转页面
-                            startActivityForResult(intent,CROP_PHOTO);//启动裁剪程序
-                        } catch (Resources.NotFoundException e) {
-                            Log.d(TAG, "TAKE_PHOTO " +e.getMessage());
-                    }
+//                            intent.putExtra(MediaStore.EXTRA_OUTPUT,imageUri);
+//                            intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+//                            //再次启动跳转页面
+//                            startActivityForResult(intent,CROP_PHOTO);//启动裁剪程序
+//                        } catch (Resources.NotFoundException e) {
+//                            Log.d(TAG, "TAKE_PHOTO " +e.getMessage());
+//                    }
+
+                        BitmapFactory.Options options2 = new BitmapFactory.Options();
+                        options2.inSampleSize = 4;
+                        options2.inPreferredConfig = Bitmap.Config.RGB_565;
+                        Bitmap bm = BitmapFactory.decodeFile(tempPhotoName, options2);
+                        Log.d(TAG, "压缩后图片的大小" + (bm.getByteCount() / 1024)
+                                + "KB 宽度为" + bm.getWidth() + "高度为" + bm.getHeight());
+                        image.setImageBitmap(bm);
                     }
                 }
 
@@ -165,16 +173,25 @@ public class TakePhoto extends Activity {
             case CROP_PHOTO:
                 if (requestCode == RESULT_OK){
                         if (imageUri!=null) {
-                            //Bitmap bitmap =BitmapFactory.decodeFile(tempPhotoName);
-                            try {
-                                Log.d(TAG, "data is null ");
-                                //Bitmap bitmap =BitmapFactory.decodeFile(tempPhotoName);
-                                Bitmap bitmap =BitmapFactory.decodeStream(getContentResolver().openInputStream(imageUri));
-                                Log.d(TAG, "File size :"+bitmap.getByteCount()/1021+"kb"+"File path :"+tempPhotoName);
-                                image.setImageBitmap(bitmap);
-                            } catch (FileNotFoundException e) {
-                                Log.d(TAG, "RESULT_OK " + e.getMessage());
-                            }
+
+//                            try {
+//                            Log.d(TAG, "data is null ");
+//
+//                                Bitmap bitmap =BitmapFactory.decodeStream(getContentResolver().openInputStream(imageUri));
+//                                Log.d(TAG, "File size :"+bitmap.getByteCount()/1021+"kb"+"File path :"+tempPhotoName);
+//
+//
+//                                image.setImageBitmap(bitmap);
+//                            } catch (FileNotFoundException e) {
+//                                Log.d(TAG, "RESULT_OK " + e.getMessage());
+//                            }
+                            BitmapFactory.Options options2 = new BitmapFactory.Options();
+                            options2.inSampleSize = 4;
+                            options2.inPreferredConfig = Bitmap.Config.RGB_565;
+                            Bitmap bm = BitmapFactory.decodeFile(tempPhotoName, options2);
+                            Log.d(TAG, "压缩后图片的大小" + (bm.getByteCount() / 1024)
+                                    + "KB 宽度为" + bm.getWidth() + "高度为" + bm.getHeight());
+                            image.setImageBitmap(bm);
                         }
                 }
                 break;
